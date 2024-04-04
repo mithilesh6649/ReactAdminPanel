@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "label":"Dashboard",
+        "url":"/dashboard"
+    },
+    {
+        "id":2,
+        "label":"Courses",
+        "url":"/courses"
+    },
+    {
+        "id":3,
+        "label":"Admission",
+        "url":"/admission"
+    },
+    {
+        "id":4,
+        "label":"Contact us",
+        "url":"/contact-us"
+    },
+    {
+        "id":5,
+        "label":"About us",
+        "url":"/about-us"
+    }
+]
