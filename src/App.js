@@ -17,6 +17,7 @@ function App() {
           <Route path="/" element={ <Signup /> } /> 
           <Route path="admin-panel" element={ <Admin /> } >
             <Route path="dashboard" element={<Dashboard />}/>
+            <Route path="*" element={ <Notfound /> } />
           </Route>
           <Route path="login" element={ <Login /> } />
           <Route path="*" element={ <Notfound /> } /> 
