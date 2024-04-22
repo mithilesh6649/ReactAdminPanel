@@ -4,14 +4,48 @@ import {
  Route
 } from  "react-router-dom";
 
+import {
+  ThemeProvider,
+  createTheme
+} from "@mui/material";
+
+import { 
+  deepPurple,
+  teal,
+  pink,
+  deepOrange,
+  lightBlue,
+  cyan
+ } from '@mui/material/colors';
+
 import Signup from './cmp/Signup/Signup';
 import Admin from "./cmp/Admin/Admin";
 import Dashboard from "./cmp/Admin/Dashboard/Dashboard";
 import Login from "./cmp/Login/Login";
 import Notfound from "./cmp/Notfound/Notfound";
+
+import '@fontsource/poppins';
+
 function App() {
+   
+  const Theme = createTheme({
+    palette:{
+      primary:deepPurple,
+      secondary:teal,
+      error:pink,
+      warning:deepOrange,
+      success:cyan,
+      info:lightBlue
+    },
+    typography:{
+      fontFamily:"Poppins"
+    }
+  });
+
+
   return (
     <>
+    <ThemeProvider theme={Theme}>
        <Router>
          <Routes>
           <Route path="/" element={ <Signup /> } /> 
@@ -23,6 +57,7 @@ function App() {
           <Route path="*" element={ <Notfound /> } /> 
          </Routes> 
        </Router> 
+    </ThemeProvider>
     </>
   );
 }
