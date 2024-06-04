@@ -8,22 +8,22 @@ import {
     FormControlLabel,
     Stack
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Link
 } from "react-router-dom";
-
+import useHttp from '../../hooks/useHttp';
 import MediaQuery from "react-responsive";
 import { Password } from "@mui/icons-material";
-
+import SweetAlert from 'react-bootstrap-sweetalert';
 const Signup = () => {
 
 
     const signupForm = {
-        fullname: "",
-        mobile: "",
-        email: "",
-        password: ""
+        fullname: "Mithilesh Kumar",
+        mobile: "7651823456",
+        email: "mk@gmail.com",
+        password: "66546546546"
     }
 
     const signupFormError = {
@@ -48,7 +48,56 @@ const Signup = () => {
     const [input, setInput] = useState(signupForm);
     const [error, setError] = useState(signupFormError);
     const [checked, setChecked] = useState(false);
+    const [request, setRequest] = useState(null);
+    const [sweetAlert, setSweetAlert] = useState({
+        state: false,
+        title: "s",
+        icon: "controlled",
+        message: " s"
+    });
+    const [httpResponse, httpError, httpLoader] = useHttp(request);
+    useEffect(() => {
 
+        if (request) {
+            if (httpResponse) {
+                return setSweetAlert({
+                    state: true,
+                    title: "Success",
+                    icon: "success",
+                    message: "Signup is completed try to login"
+                });
+            }
+            if (httpError) {
+                return setSweetAlert({
+                    state: true,
+                    title: "Failed",
+                    icon: "error",
+                    message: "Something went to wrong"
+                });
+            }
+        }
+    }, [httpResponse, httpError, httpLoader]);
+    const Alert = () => {
+        const alert = (
+            <>
+                <SweetAlert
+                    show={sweetAlert.state}
+                    title={sweetAlert.title}
+                    type={sweetAlert.icon}
+                    customButtons={
+                        <>
+                            <Button variant="outlined" color="warning" sx={{ py: 1, mr: 2 }}>Cancel</Button>
+                            <Button variant="outlined" color="success" sx={{ py: 1 }}>OK</Button>
+                        </>
+
+                    }
+                >
+                    {sweetAlert.message}
+                </SweetAlert>
+            </>
+        );
+        return alert;
+    }
 
     const fullnameValidation = (e) => {
         const input = e.target;
@@ -185,10 +234,10 @@ const Signup = () => {
     }
 
     const validateOnSubmit = () => {
-        let valid = false;
+        let valid = true;
         for (const key in input) {
             if (input[key].length === 0) {
-                valid = true;
+                valid = false;
                 setError((oldData) => {
                     return {
                         ...oldData,
@@ -208,13 +257,19 @@ const Signup = () => {
         e.preventDefault();
         const isValid = validateOnSubmit();
         if (isValid) {
-
+            setRequest({
+                method: "post",
+                url: "http://localhost:3434/signup",
+                data: input
+            })
         }
     }
 
     const design = (
         <>
+
             <Grid container>
+                <Alert></Alert>
                 <Grid item>
                     <MediaQuery minWidth={1224}>
                         <img src="images/auth.svg" alt="auth" width="100%" />
