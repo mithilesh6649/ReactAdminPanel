@@ -390,3 +390,105 @@ $('#addTravelForm').validate({
 //Eight...............
 
 Route::post('employee/travel/save', 'employeeTravelSave')->name('employee.travel.save');
+
+
+
+
+//Nine.....................
+
+
+ 
+
+@section('content')
+    
+
+ 
+                            <div id="calendarEvent"></div>
+                 
+    </section>
+@endsection
+
+
+@push('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+@endpush
+
+@push('scripts')
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+    <script>
+       $(document).ready(function(){
+        var calendar = $('#calendarEvent').fullCalendar({
+            customButtons: {
+               listButton: {
+                  text: 'List',
+                  icon: 'fa-list',
+                  click: function() {
+                     $('#calendarEvent').fullCalendar('changeView', 'listWeek');
+                  }
+               },
+               gridButton: {
+                  text: 'Grid',
+                  class: 'active',
+                  icon: 'fa fa-list',
+                  click: function() {
+                     $('#calendarEvent').fullCalendar('changeView', 'basicWeek');
+                  }
+               },
+               calendarButton: {
+                  text: 'Calendar',
+                  icon: 'fa fa-cal',
+                  click: function() {
+                     $('#calendarEvent').fullCalendar('changeView', 'month');
+                  }
+               },
+               filterButton: {
+                
+                  text: 'Filter ' ,
+                  
+                  click: function() {
+                     alert('clicked the custom button!');
+                  }
+               }
+            },
+            buttonText:{
+               today: 'Today',
+               list: 'List'
+            },
+            header: {
+            left: 'prev today next title',
+            
+            //: 'title',
+            right: 'listButton gridButton calendarButton filterButton'
+            },
+            defaultView: 'month',
+            defaultDate: '{{date("Y-m-d")}}',
+            navLinks: true, // can click day/week names to navigate views
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: {!! json_encode($schedules) !!},
+            eventRender: function(event, element) {
+                console.log(event.title);
+            //    element.find(".fc-content").html('<div class="event_main"><div class="event_time"><img src="images/calender.svg"/><p>11:00 AM</p></div><div class="social_icon"><img src="images/insta.png"/></div><div class="image_text"><h1>Sprout Coffee</h1><p>Caption for the post goes here.</p></div><div class="post_img"><img src="images/mask_group.png"/></div><div class="btn_links"><a href="#"><img src="images/eye.svg"/></a><a href="#"><img src="images/edit.svg"/></a><a href="#"><img src="images/dlt.svg"/></a></div></div>');
+               element.find(".fc-content").html('<div class="event_main"><div class="event_time"><p>11:00 AM</p></div><div class="image_text"><h6>Sprout Coffee</h6><p>Caption for the post goes here.</p></div><div class="btn_links"><a href="http://127.0.0.1:8000/employee/fullcalender"><img src="images/eye.svg"/></a><a href="#"><img src="images/edit.svg"/></a><a href="#"><img src="images/dlt.svg"/></a></div></div>');
+           
+        },
+        });
+       });
+    </script>
+
+    $schedules = [['id' => 1, 'title' => 'One', 'start' => '2024-06-06'], ['id' => 2, 'title' => 'Two', 'start' => '2024-06-07'], ['id' => 3, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 4, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 5, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 6, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 7, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 8, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 9, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 10, 'title' => 'Two', 'start' => '2024-06-06'], ['id' => 11, 'title' => 'Two', 'start' => '2024-06-06']];
+
+
+@endpush
