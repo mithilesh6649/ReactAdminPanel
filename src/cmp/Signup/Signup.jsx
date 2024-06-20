@@ -1,3 +1,4 @@
+import Cookies from "universal-cookie";
 import {
     Button,
     Typography,
@@ -14,11 +15,11 @@ import {
 } from "react-router-dom";
 import useHttp from '../../hooks/useHttp';
 import MediaQuery from "react-responsive";
-import { Password } from "@mui/icons-material";
+import { Cookie, Password } from "@mui/icons-material";
 import SweetAlert from 'react-bootstrap-sweetalert';
 const Signup = () => {
 
-
+    const cookie = new Cookies();
     const signupForm = {
         fullname: "Mithilesh Kumar",
         mobile: "7651823456",
@@ -60,6 +61,9 @@ const Signup = () => {
 
         if (request) {
             if (httpResponse) {
+                cookie.set('authToken', httpResponse.token, {
+                    maxAge: 86400
+                });
                 return setSweetAlert({
                     state: true,
                     title: "Success",
@@ -86,8 +90,8 @@ const Signup = () => {
                     type={sweetAlert.icon}
                     customButtons={
                         <>
-                            <Button variant="outlined" color="warning" sx={{ py: 1, mr: 2 }}>Cancel</Button>
-                            <Button variant="outlined" color="success" sx={{ py: 1 }}>OK</Button>
+                            <Button onClick={() => setSweetAlert({ state: false })} variant="outlined" color="warning" sx={{ py: 1, mr: 2 }}>Cancel</Button>
+                            <Button variant="outlined" color="success" sx={{ py: 1 }} component={Link} to="/admin-panel">Login</Button>
                         </>
 
                     }

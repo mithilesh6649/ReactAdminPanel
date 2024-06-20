@@ -23,7 +23,7 @@ import Admin from "./cmp/Admin/Admin";
 import Dashboard from "./cmp/Admin/Dashboard/Dashboard";
 import Login from "./cmp/Login/Login";
 import Notfound from "./cmp/Notfound/Notfound";
-
+import AuthGuard from "./guard/AuthGuard";
 import '@fontsource/poppins';
 
 function App() {
@@ -49,9 +49,11 @@ function App() {
        <Router>
          <Routes>
           <Route path="/" element={ <Signup /> } /> 
-          <Route path="admin-panel" element={ <Admin /> } >
-            <Route path="dashboard" element={<Dashboard />}/>
-            <Route path="*" element={ <Notfound /> } />
+          <Route element={<AuthGuard />}>
+            <Route path="admin-panel" element={ <Admin /> } >
+              <Route path="dashboard" element={<Dashboard />}/>
+              <Route path="*" element={ <Notfound /> } />
+            </Route>
           </Route>
           <Route path="login" element={ <Login /> } />
           <Route path="*" element={ <Notfound /> } /> 
